@@ -48,6 +48,8 @@ int main(int argc, char* argv[])
   int baud;
   ros::param::param<std::string>("~port", port, "/dev/ttyACM0");
   ros::param::param<int>("~baud", baud, 57600);
+  // https://answers.ros.org/question/354667/rosserial-module-serialclient-not-found/
+  system ("stty -F /dev/ttyACM0 -hupcl"); // Added to inhibit hangup signal
 
   boost::asio::io_service io_service;
   rosserial_server::SerialSession serial_session(io_service, port, baud);
